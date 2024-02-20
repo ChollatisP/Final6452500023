@@ -10,17 +10,17 @@ frame = Tk()
 frame.title("Turtle_Control")
 frame.geometry("200x300")
 
-def BTN(num):
-     if num.data==1:
+def BTN(motion):
+     if motion.data==1:
         text = "Forward"
         pub2.publish(text)
-     elif num.data==2:
+     elif motion.data==2:
         text = "Backward"
         pub2.publish(text)
-     elif num.data==3:
+     elif motion.data==3:
         text = "Turn Left"
         pub2.publish(text)
-     elif num.data==4:
+     elif motion.data==4:
         text = "Turn Right"
         pub2.publish(text)
           
@@ -29,7 +29,7 @@ def BTN(num):
 pub1 = rospy.Publisher("turtle1/cmd_vel",Twist, queue_size=10)
 pub2 = rospy.Publisher('motion', String, queue_size=10)
 ledpub = rospy.Publisher("Topic_LED_13", Int16, queue_size = 10) 
-BTNsub = rospy.Subscriber("status",Int16,callback=BTN)
+BTNsub = rospy.Subscriber("Status",Int16,callback=BTN)
 rospy.init_node("Turtle_Control")
 rate = rospy.Rate(10) # 10hz
 def fw():

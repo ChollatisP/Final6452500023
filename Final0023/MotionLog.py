@@ -22,7 +22,7 @@ def run(val):
 
 if __name__ == "__main__":
 	#  Initial ROS node and determine Publish or Subscribe action	
-	sub = rospy.Subscriber("status",String,callback=run)
+	sub = rospy.Subscriber("motion",String,callback=run)
 	rospy.init_node("MotionLog")
 	#rospy.spin()
 
