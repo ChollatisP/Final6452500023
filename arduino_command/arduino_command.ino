@@ -17,7 +17,7 @@ void control_LED( const std_msgs::Int16& cmd_msg)
   digitalWrite(13, value);   // blink the led
 }
 
-ros::Publisher BTN("turtle1/cmd_vel", &msg );
+//ros::Publisher BTN("turtle1/cmd_vel", &msg );
 ros::Subscriber<std_msgs::Int16> ledsub("Topic_LED_13", &control_LED );
 ros::Publisher Status("Status",&motion);
 
@@ -31,7 +31,7 @@ void setup()
   digitalWrite(13, 1); 
   nh.initNode();
   nh.subscribe(ledsub);
-  nh.advertise(BTN);
+  //nh.advertise(BTN);
   nh.advertise(Status);
 }
 int mode=0;
@@ -50,14 +50,14 @@ void loop()
   {
     if(mode == 0)
     {
-      msg.linear.x = 1.0;
+      //msg.linear.x = 1.0;
       motion.data = 1;
       Status.publish(&motion);
       delay(100);
     }
     else
     {
-      msg.linear.x = -1.0;
+      //msg.linear.x = -1.0;
       motion.data = 2;
       Status.publish(&motion);
       delay(100);
@@ -65,19 +65,19 @@ void loop()
   }
   else if (BTN2==0)
   {
-    msg.angular.z= 1.0;
+    //msg.angular.z= 1.0;
     motion.data = 3;
     Status.publish(&motion);
     delay(100);
   }
   else if (BTN1==0)
   {
-    msg.angular.z= -1.0;
+    //msg.angular.z= -1.0;
     motion.data = 4;
     Status.publish(&motion);
     delay(100);
   }
-  BTN.publish(&msg);
+  //BTN.publish(&msg);
   msg.linear.x = 0.0;
   msg.angular.z= 0.0;
   nh.spinOnce();

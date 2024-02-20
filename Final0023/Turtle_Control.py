@@ -10,17 +10,22 @@ frame = Tk()
 frame.title("Turtle_Control")
 frame.geometry("200x300")
 
+mode = 1
 def BTN(motion):
      if motion.data==1:
+        fw()
         text = "Forward"
         pub2.publish(text)
      elif motion.data==2:
+        bw()
         text = "Backward"
         pub2.publish(text)
      elif motion.data==3:
+        lt()
         text = "Turn Left"
         pub2.publish(text)
      elif motion.data==4:
+        rt()
         text = "Turn Right"
         pub2.publish(text)
           
@@ -29,7 +34,9 @@ def BTN(motion):
 pub1 = rospy.Publisher("turtle1/cmd_vel",Twist, queue_size=10)
 pub2 = rospy.Publisher('motion', String, queue_size=10)
 ledpub = rospy.Publisher("Topic_LED_13", Int16, queue_size = 10) 
-BTNsub = rospy.Subscriber("Status",Int16,callback=BTN)
+if mode == 1:
+    BTNsub = rospy.Subscriber("Status",Int16,callback=BTN)
+
 rospy.init_node("Turtle_Control")
 rate = rospy.Rate(10) # 10hz
 def fw():
@@ -81,6 +88,9 @@ def off():
     text = "PenOFF"
     pub2.publish(text)
 
+def mode():
+    global mode
+    mode = ~mode
 
 B1 = Button(text = "FW", command=fw)
 B1.place(x=73, y=120)
@@ -95,11 +105,13 @@ B4 = Button(text = "RT", command=rt)
 B4.place(x=128, y=180)
 
 B5 = Button(text = "PenON", command=on)
-B5.place(x=100, y=250)
+B5.place(x=100, y=50)
 
 B6 = Button(text = "PenOFF", command=off)
-B6.place(x=20, y=250)
+B6.place(x=20, y=50)
 
+B7 = Button(text = "mode", command=mode)
+B7.place(x=100, y=20)
 
 frame.mainloop()    
     
